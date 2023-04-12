@@ -1,12 +1,15 @@
 import LoginForm from "../Components/LoginForm";
+import BaseTemplate from "../templates/BaseTemplate/BaseTemplate";
 
-const Contact = () => {
+const Login = () => {
   return (
     <>
-      <h1>Login</h1>
-      <LoginForm />
+      <BaseTemplate>
+        <h1>Login</h1>
+        <LoginForm />
+      </BaseTemplate>
     </>
   );
 };
 
-export default Contact;
+export default Login;
