@@ -1,22 +1,26 @@
 import { useEffect, useMemo } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDentists } from "../context/DentistContext";
 
 const DetailCard = () => {
   const { dentists } = useDentists();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const dentist = useMemo(
-    () => dentists.find(dentist => dentist.matricula == id), 
-    [dentists]
+    () => dentists.find(dentist => dentist.matricula === id), 
+    [dentists, id]
   )
 
   useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api passando o 
-    //id do dentista que está vindo do react-router e carregar os dados em algum estado
-  }, []);
+    if(!dentist) {
+      navigate("/home")
+    }
+  }, [dentist])
+
+  if (!dentist) return <></>;
   
   return (
     //As instruções que estão com {''} precisam ser 
