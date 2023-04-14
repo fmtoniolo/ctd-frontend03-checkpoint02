@@ -1,12 +1,15 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import styles from "./Form.module.css";
 import api from "../util/api";
 import {useNavigate} from "react-router-dom";
+import LoginContext from "../context/loginContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const {setToken} = useContext(LoginContext);
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -15,7 +18,9 @@ const LoginForm = () => {
         password
       });
       if (response.status == 200) {
-        localStorage.setItem("@dhOdonto_token", response.data.token);
+        const token = response.data.token;
+        localStorage.setItem("@dhOdonto_token", token);
+        setToken(token);
         navigate("/home");
       }
     } catch (error) {
