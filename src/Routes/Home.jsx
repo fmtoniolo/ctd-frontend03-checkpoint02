@@ -1,11 +1,15 @@
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import Card from "../Components/Card";
 import api from "../util/api";
 import BaseTemplate from "../templates/BaseTemplate/BaseTemplate";
 import { useDentists } from "../context/DentistContext";
+import { useNavigate } from "react-router-dom";
+import LoginContext from "../context/loginContext";
 
 const Home = () => {
   const {dentists, setDentists} = useDentists();
+  const navigate = useNavigate();
+  const {token} = useContext(LoginContext);
 
   const getDentistas = async () => {
     const {data} = await api.get("/dentista");
@@ -18,6 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!dentists || dentists.length == 0) getDentistas();
+    if (!token) navigate("/login")
     //Nesse useEffect, deverá ser obtido todos os dentistas da API
     //Armazena-los em um estado para posteriormente fazer um map
     //Usando o componente <Card />

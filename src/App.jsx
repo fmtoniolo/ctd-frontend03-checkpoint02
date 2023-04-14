@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import { DentistProvider } from "./context/DentistContext";
 
 function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState();
 
   useEffect(() => {
     let token = localStorage.getItem("@dhOdonto_token")
