@@ -1,18 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
+import { useParams } from "react-router-dom";
+import { useDentists } from "../context/DentistContext";
 
 const DetailCard = () => {
+  const { dentists } = useDentists();
+  const { id } = useParams();
+
+  const dentist = useMemo(
+    () => dentists.find(dentist => dentist.matricula == id), 
+    [dentists]
+  )
 
   useEffect(() => {
     //Nesse useEffect, você vai fazer um fetch na api passando o 
     //id do dentista que está vindo do react-router e carregar os dados em algum estado
   }, []);
+  
   return (
     //As instruções que estão com {''} precisam ser 
     //substituídas com as informações que vem da api
     <>
-      <h1>Detail about Dentist {'Nome do Dentista'} </h1>
+      <h1>Detail about Dentist {dentist.nome} </h1>
       <section className="card col-sm-12 col-lg-6 container">
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
@@ -28,12 +38,12 @@ const DetailCard = () => {
           </div>
           <div className="col-sm-12 col-lg-6">
             <ul className="list-group">
-              <li className="list-group-item">Nome: {'Nome do Dentista'}</li>
+              <li className="list-group-item">Nome: {dentist.nome}</li>
               <li className="list-group-item">
-                Sobrenome: {'Sobrenome do Dentista'}
+                Sobrenome: {dentist.sobrenome}
               </li>
               <li className="list-group-item">
-                Usuário: {'Nome de usuário do Dentista'}
+                Usuário: {dentist.usuario.username}
               </li>
             </ul>
             <div className="text-center">
