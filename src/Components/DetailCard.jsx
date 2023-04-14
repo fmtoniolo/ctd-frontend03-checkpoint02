@@ -15,10 +15,8 @@ const DetailCard = () => {
   )
 
   useEffect(() => {
-    if(!dentist) {
-      navigate("/home")
-    }
-  }, [dentist])
+    if(!dentist) navigate("/home");
+  }, [dentist, navigate])
 
   if (!dentist) return <></>;
   
